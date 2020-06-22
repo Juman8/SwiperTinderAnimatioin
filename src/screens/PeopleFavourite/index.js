@@ -34,6 +34,7 @@ const PeopleFavourite = (props) => {
                 style={{flex: 1}}
                 data={dataTest}
                 renderItem={({item, index})=> renderItem(item, index)}
+                keyExtractor={(item, index) => `${index}`}
             />
         </View>
     )
