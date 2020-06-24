@@ -1,13 +1,31 @@
-import React, {useState, useCallback} from 'react'
-import {View, FlatList, Text, Clipboard, TouchableOpacity} from 'react-native'
+import React, {useState, useEffect} from 'react'
+import {View, FlatList, Text, Clipboard, TouchableOpacity, AsyncStorage} from 'react-native'
 import Header from '../../components/Header'
 import ImageCustom from '../../components/ImageCustom'
 import dataTest from './dataTest'
 import utils from '../../utils'
 
 const PeopleFavourite = (props) => {
+    const [dataBase, setData] = useState(dataTest)
+    useEffect(() => {
+        fetchComment()
+    }, [])
 
-    const renderItem = (item, index)=> {
+    async function fetchComment() {
+        utils.useLoading(true)
+        let newData = await AsyncStorage.getItem("DATABASE")
+        utils.useLoading(false)
+        if(newData){
+            console.log(newTemp)
+
+            let tempData = JSON.parse(newData)
+            let newTemp = tempData.concat(dataTest)
+            console.log(newTemp)
+            setData(newTemp)
+        }
+    }
+
+    const renderItem = ({item, index})=> {
         return(
             <TouchableOpacity onPress={()=> {
                 utils.showToast('Đã copy', 1000, 'success')
@@ -22,18 +40,19 @@ const PeopleFavourite = (props) => {
                 </View>
                 <View  style={{flex: 1, marginLeft: 10}}>
                     <Text style={{fontSize: 24, color: '#000', marginTop: 15}}>{item.name}</Text>
-                    <Text style={{fontSize: 18, color: '#666', marginTop: 4}}>Popularity: <Text style={{color: '#ff0000'}}>{100 - index/5}</Text></Text>
+                    <Text style={{fontSize: 18, color: '#666', marginTop: 4}}>Phone: <Text style={{color: '#555'}}>{item.phone}</Text></Text>
                 </View>
             </TouchableOpacity>
         )
     }
+    console.log(dataBase)
     return(
         <View style={{flex: 1}}>
-            <Header title="Favourite" />
+            <Header title="My Favourite" />
             <FlatList 
                 style={{flex: 1}}
-                data={dataTest}
-                renderItem={({item, index})=> renderItem(item, index)}
+                data={dataBase}
+                renderItem={renderItem}
                 keyExtractor={(item, index) => `${index}`}
             />
         </View>

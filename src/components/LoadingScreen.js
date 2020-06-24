@@ -22,7 +22,6 @@ class LoadingScreen extends Component {
         // if(!visiable){
         //     return null
         // }
-        console.log('OKOKOK', visiable)
         if(!visiable){
             return null
         }
