@@ -108,7 +108,7 @@ class Information extends React.Component{
     const mLength = dataUser.length<2
     return(
       <View style={{height: '100%', width: '100%', position: 'absolute', alignItems: 'center'}}>
-        <View style={{height: '50%', width: '90%'}}>
+        <View style={{height: '50%', width: '90%', minHeight: 320}}>
           <View style={{position: 'absolute', height: '100%', width: '100%'}}>
             <Card disable dataUser={mLength ? dataUser[0] : dataUser[1]} swipped={this.swipped}/>
           </View>
